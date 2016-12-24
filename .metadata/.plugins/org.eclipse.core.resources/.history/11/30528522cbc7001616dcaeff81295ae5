@@ -1,0 +1,20 @@
+package org.njp.dao;
+
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+
+/**
+ * Session Bean implementation class CreditCardValidator
+ */
+@Stateless
+@LocalBean
+public class CreditCardValidator implements CreditCardValidatorRemote {
+
+    /**
+     * Default constructor. 
+     */
+    public CreditCardValidator() {
+        // TODO Auto-generated constructor stub
+    }
+
+}

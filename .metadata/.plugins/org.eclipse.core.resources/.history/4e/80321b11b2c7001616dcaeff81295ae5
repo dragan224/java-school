@@ -1,0 +1,9 @@
+package org.njp.ejb;
+
+import javax.ejb.Remote;
+
+@Remote
+public interface ShoppingCartControllerRemote {
+	public List<Proizvod> getAll();
+	
+}

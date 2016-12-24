@@ -1,0 +1,17 @@
+package org.njp.controllers;
+
+import java.io.Serializable;
+
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
+@ManagedBean(name="session")
+@SessionScoped
+public class SessionBean implements Serializable{
+
+	
+}

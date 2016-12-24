@@ -1,0 +1,13 @@
+package org.njp.dao;
+
+import javax.ejb.Stateful;
+
+import org.njp.entities.Korisnici;
+import org.njp.entities.Proizvodi;
+
+@Stateless
+public class DAOProizvod extends DAOAbstractDatabase<Proizvodi> implements IDAOProizvod {
+	public DAOProizvod() {
+		super(Proizvodi.class);
+	}
+}

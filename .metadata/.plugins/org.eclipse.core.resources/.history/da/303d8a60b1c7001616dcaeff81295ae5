@@ -1,0 +1,8 @@
+package org.njp.services;
+
+import org.njp.dao.IDAOKorisnik;
+import org.njp.entities.Korisnici;
+
+public class ServiceProizvod extends ServiceAbstract<Proizvodi, IDAOProizvod> implements IServiceKorisnik {
+
+}

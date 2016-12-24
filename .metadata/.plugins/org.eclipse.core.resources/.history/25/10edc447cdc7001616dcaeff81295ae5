@@ -1,0 +1,8 @@
+package org.njp.dao;
+
+import org.njp.entities.Korisnici;
+import org.njp.entities.Proizvodi;
+
+public interface IDAOProizvod extends IDAOAbstract<Proizvodi> {
+
+}

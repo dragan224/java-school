@@ -1,0 +1,50 @@
+package org.njp.entities;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the Proizvodi database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Proizvodi.findAll", query="SELECT p FROM Proizvodi p")
+public class Proizvodi extends BasicEntity implements Serializable {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int proizvodiID;
+
+	private String ime;
+
+	private int kolicina;
+
+	public Proizvodi() {
+	}
+
+	public int getProizvodiID() {
+		return this.proizvodiID;
+	}
+
+	public void setProizvodiID(int proizvodiID) {
+		this.proizvodiID = proizvodiID;
+	}
+
+	public String getIme() {
+		return this.ime;
+	}
+
+	public void setIme(String ime) {
+		this.ime = ime;
+	}
+
+	public int getKolicina() {
+		return this.kolicina;
+	}
+
+	public void setKolicina(int kolicina) {
+		this.kolicina = kolicina;
+	}
+
+}

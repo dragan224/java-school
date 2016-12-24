@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="1" failures="0" hostname="Dragans-MacBook-Pro.local" name="algorithms_test.ClosestPointsTest" skipped="0" tests="1" time="0.0" timestamp="2016-11-22T18:46:20">
+  <properties>
+    <property name="java.vendor" value="Oracle Corporation" />
+    <property name="sun.java.launcher" value="SUN_STANDARD" />
+    <property name="env.XPC_SERVICE_NAME" value="0" />
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers" />
+    <property name="os.name" value="Mac OS X" />
+    <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/classes" />
+    <property name="env.TMPDIR" value="/var/folders/9r/rf_n_pyj1cs03dy_fs17z2580000gn/T/" />
+    <property name="env.PWD" value="/Users/dragan/Documents/workspace/api-ant" />
+    <property name="env.LANG" value="en_US.UTF-8" />
+    <property name="java.vm.specification.vendor" value="Oracle Corporation" />
+    <property name="ant.home" value="/usr/local/Cellar/ant/1.9.7/libexec" />
+    <property name="java.runtime.version" value="1.8.0_65-b17" />
+    <property name="env.JAVA_MAIN_CLASS_65645" value="org.apache.tools.ant.launch.Launcher" />
+    <property name="env.Apple_PubSub_Socket_Render" value="/private/tmp/com.apple.launchd.Y7uLHcVlYo/Render" />
+    <property name="env.DISPLAY" value="/private/tmp/com.apple.launchd.RZ7lbb55dM/org.macosforge.xquartz:0" />
+    <property name="user.name" value="dragan" />
+    <property name="env.USER" value="dragan" />
+    <property name="env.SHELL" value="/bin/bash" />
+    <property name="env.__CF_USER_TEXT_ENCODING" value="0x1F5:0x0:0x0" />
+    <property name="env.PATH" value="/Library/Frameworks/Python.framework/Versions/2.7/bin:/opt/local/bin:/opt/local/sbin:/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/TeX/texbin" />
+    <property name="user.language" value="en" />
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib" />
+    <property name="ant.project.default-target" value="build" />
+    <property name="env.XPC_FLAGS" value="0x0" />
+    <property name="ant.project.name" value="api-ant" />
+    <property name="java.version" value="1.8.0_65" />
+    <property name="user.timezone" value="" />
+    <property name="sun.arch.data.model" value="64" />
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/endorsed" />
+    <property name="sun.cpu.isalist" value="" />
+    <property name="sun.jnu.encoding" value="UTF-8" />
+    <property name="file.encoding.pkg" value="sun.io" />
+    <property name="env.SHLVL" value="2" />
+    <property name="ECLIPSE_HOME" value="../../../eclipse/java-neon/Eclipse.app/Contents/Eclipse/" />
+    <property name="file.separator" value="/" />
+    <property name="java.specification.name" value="Java Platform API Specification" />
+    <property name="java.class.version" value="52.0" />
+    <property name="user.country" value="US" />
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre" />
+    <property name="ant.file.api-ant" value="/Users/dragan/Documents/workspace/api-ant/build.xml" />
+    <property name="java.vm.info" value="mixed mode" />
+    <property name="env.LOGNAME" value="dragan" />
+    <property name="ant.file" value="/Users/dragan/Documents/workspace/api-ant/build.xml" />
+    <property name="os.version" value="10.12.1" />
+    <property name="env.TERM_PROGRAM_VERSION" value="387" />
+    <property name="path.separator" value=":" />
+    <property name="java.vm.version" value="25.65-b01" />
+    <property name="ant.library.dir" value="/usr/local/Cellar/ant/1.9.7/libexec/lib" />
+    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob" />
+    <property name="env.TERM" value="xterm-256color" />
+    <property name="sun.io.unicode.encoding" value="UnicodeBig" />
+    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit" />
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16" />
+    <property name="user.home" value="/Users/dragan" />
+    <property name="target" value="1.8" />
+    <property name="java.specification.vendor" value="Oracle Corporation" />
+    <property name="env.TERM_PROGRAM" value="Apple_Terminal" />
+    <property name="java.library.path" value="/Users/dragan/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:." />
+    <property name="java.vendor.url" value="http://java.oracle.com/" />
+    <property name="java.vm.vendor" value="Oracle Corporation" />
+    <property name="gopherProxySet" value="false" />
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment" />
+    <property name="sun.java.command" value="org.apache.tools.ant.launch.Launcher -cp  -lib /usr/local/share/ant test -verbose" />
+    <property name="java.class.path" value="/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-launcher.jar:/usr/local/share/ant:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-antlr.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-apache-bcel.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-apache-bsf.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-apache-log4j.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-apache-oro.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-apache-regexp.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-apache-resolver.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-apache-xalan2.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-commons-logging.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-commons-net.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-jai.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-javamail.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-jdepend.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-jmf.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-jsch.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-junit.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-junit4.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-launcher.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-netrexx.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-swing.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant-testutil.jar:/usr/local/Cellar/ant/1.9.7/libexec/lib/ant.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/lib/tools.jar" />
+    <property name="ant.version" value="Apache Ant(TM) version 1.9.7 compiled on April 9 2016" />
+    <property name="env.TERM_SESSION_ID" value="80C49404-9521-4CC8-AC95-5263F9B94CD6" />
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification" />
+    <property name="ant.file.type" value="file" />
+    <property name="java.vm.specification.version" value="1.8" />
+    <property name="sun.os.patch.level" value="unknown" />
+    <property name="sun.cpu.endian" value="little" />
+    <property name="env.HOME" value="/Users/dragan" />
+    <property name="debuglevel" value="source,lines,vars" />
+    <property name="java.io.tmpdir" value="/var/folders/9r/rf_n_pyj1cs03dy_fs17z2580000gn/T/" />
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/" />
+    <property name="env.SSH_AUTH_SOCK" value="/private/tmp/com.apple.launchd.riqvgFjyp7/Listeners" />
+    <property name="os.arch" value="x86_64" />
+    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment" />
+    <property name="java.ext.dirs" value="/Users/dragan/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" />
+    <property name="user.dir" value="/Users/dragan/Documents/workspace/api-ant" />
+    <property name="line.separator" value="&#xa;" />
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM" />
+    <property name="basedir" value="/Users/dragan/Documents/workspace/api-ant" />
+    <property name="ant.java.version" value="1.8" />
+    <property name="ant.core.lib" value="/usr/local/Cellar/ant/1.9.7/libexec/lib/ant.jar" />
+    <property name="source" value="1.8" />
+    <property name="file.encoding" value="UTF-8" />
+    <property name="ant.file.type.api-ant" value="file" />
+    <property name="java.specification.version" value="1.8" />
+    <property name="ant.project.invoked-targets" value="test" />
+  </properties>
+  <error message="algorithms_test.ClosestPointsTest" type="java.lang.ClassNotFoundException">java.lang.ClassNotFoundException: algorithms_test.ClosestPointsTest
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+</error>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

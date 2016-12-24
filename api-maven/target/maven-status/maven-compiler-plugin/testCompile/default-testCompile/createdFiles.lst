@@ -1,0 +1,11 @@
+algorithms_test/ClosestPointsTest.class
+algorithms_test/RectangleInteresctionTest.class
+algorithms_test/VectorsTest.class
+algorithms_test/TriangulationTest.class
+operations_test/PointTest.class
+operations_test/PolygonTest.class
+algorithms_test/ConvexHullTest.class
+operations_test/SegmentTest.class
+operations_test/TriangleTest.class
+operations_test/RectangleTest.class
+operations_test/CircleTest.class

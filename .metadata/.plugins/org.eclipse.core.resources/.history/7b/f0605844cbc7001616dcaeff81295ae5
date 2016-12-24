@@ -1,0 +1,8 @@
+package Stateless;
+
+import javax.ejb.Remote;
+
+@Remote
+public interface CreditCardValidatorRemote {
+	boolean Validate(String number);
+}

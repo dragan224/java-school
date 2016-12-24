@@ -1,0 +1,8 @@
+package org.njp.services;
+
+import org.njp.entities.Korisnici;
+
+public interface IServiceKorisnik extends IServiceAbstract<Korisnici> {
+
+	public boolean validate(String email, String password);
+}

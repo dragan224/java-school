@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<title>Login</title>
+</head>
+<body>
+
+ <body ng-app="login" ng-controller="ctrl">
+    <h1>Login</h1>
+
+    <input type="text" placeholder="email" ng-model="email"><br>
+    <input type="password" placeholder="password" ng-model="password"><br>
+    <br>
+    <button ng-click="login()">Login</button>
+</body>
+
+<script>
+   var app = angular.module("login", []);
+   app.controller('ctrl',['$scope','$http', '$window', function($scope, $http, $window) {
+     $scope.email = "" ;
+     $scope.password = "" ;
+     $scope.login = function() {
+        var encodedString = 'email=' + encodeURIComponent($scope.email) + '&password=' + encodeURIComponent($scope.password);
+        $http({
+            method:'POST',
+            url: 'http://localhost:8080/V05/rest/auth_service/login',
+            data: encodedString,
+            headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+        })
+        .success(function(data, status, headers, config){
+            // status == 200
+            $window.sessionStorage.setItem("email", $scope.email);
+            $window.sessionStorage.setItem("auth", data); 
+            $window.location.href = "http://localhost:8080/V05/webshop.html";
+        })
+        .error(function(data, status, headers, config){
+            alert("Neuspesno logovanje - proverite podatke!");
+        });
+    };
+    }]);
+
+</script>
+
+</body>
+</html>

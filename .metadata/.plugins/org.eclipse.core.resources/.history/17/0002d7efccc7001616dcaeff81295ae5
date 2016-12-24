@@ -1,0 +1,166 @@
+package org.njp.controllers;
+
+import java.io.Serializable;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
+import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+import org.njp.ejb.CreditCardValidatorRemote;
+import org.njp.ejb.ShoppingCartControllerRemote;
+import org.njp.entities.Proizvodi;
+
+import com.mysql.fabric.xmlrpc.base.Array;
+
+@ManagedBean(name="shoppingBean")
+@SessionScoped
+public class ShoppingBean implements Serializable {
+	
+	private String currentSelection;
+	
+	private string email;
+
+	private List<Proizvodi> cart = new ArrayList<>();
+	
+	private String creditCard;
+	
+	private String checkoutError;
+	
+	public String getCheckoutError() {
+		return checkoutError;
+	}
+
+	public void setCheckoutError(String checkoutError) {
+		this.checkoutError = checkoutError;
+	}
+
+	public String getCreditCard() {
+		return creditCard;
+	}
+
+	public void setCreditCard(String creditCard) {
+		this.creditCard = creditCard;
+	}
+
+	public boolean validateCreditCard() throws MalformedURLException {
+		String serviceName="Greeter";
+		String nameSpace="http://org.njp.ejb/"; //ime paketa
+		String addr="http://localhost:8080/Cas05Client/Greeter/CreditCardValidator?WSDL"; //localhost:8080/ima aplikacije(projekta)/ime servisa/imebina + ?WSDL
+		URL location = new URL(addr);
+		QName serviceNameQ = new QName(nameSpace, serviceName);
+		Service service = Service.create(location, serviceNameQ);
+		
+		CreditCardValidatorRemote greeter1 = service.getPort(CreditCardValidatorRemote.class);
+		boolean isValid = greeter1.Validate(creditCard);
+		
+		if (!isValid) {
+			checkoutError = "Nevalidna kreditna kartica";
+		} else {
+			checkoutError = "Uspesna kupovina!";
+		}
+		
+		return isValid;
+	}
+	
+	public void checkout() {
+		try {
+			
+		} catch (Exception e) {
+			System.out.println("CreditCardValidator puko!!!");
+		}
+	}
+	
+	public List<Proizvodi> getCart() {
+		return cart;
+	}
+
+	public void setCart(List<Proizvodi> cart) {
+		this.cart = cart;
+	}
+
+	private int toAdd;
+	
+	public void removeFromCart() {
+		for (int i = 0; i < cart.size(); i++) {
+			if (cart.get(i).getIme().equals(currentSelection.split(" ")[0])) {
+				cart.remove(i);
+				break;
+			}
+		}
+	}
+	
+	public void addToCart() {
+		if (toAdd <= 0) return;
+		Proizvodi p = new Proizvodi();
+		
+		p.setIme(currentSelection.split(" ")[0]);
+		p.setKolicina(toAdd);
+		
+		for (int i = 0; i < cart.size(); i++) {
+			if (cart.get(i).getIme().equals(p.getIme())) {
+				p.setKolicina(toAdd + cart.get(i).getKolicina());
+				cart.remove(i);
+				break;
+			}
+		}
+		
+		for (Proizvodi pr: cart) {
+			if (pr.getIme().equals(p.getIme())) {
+				
+				p.setKolicina(toAdd + pr.getKolicina());
+				cart.remove(pr);
+				break;
+			}
+		}
+		cart.add(p);
+		System.out.println("---Korpa---");
+		for (Proizvodi pr: cart) {
+			System.out.println(pr);
+		}
+		System.out.println("---Korpa---");
+	}
+
+	public int getToAdd() {
+		return toAdd;
+	}
+
+	public void setToAdd(int toAdd) {
+		this.toAdd = toAdd;
+	}
+
+	public String getCurrentSelection() {
+		return currentSelection;
+	}
+
+	public void setCurrentSelection(String currentSelection) {
+		this.currentSelection = currentSelection;
+	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2138579886077821591L;
+
+	
+	public void valueChangedListener() {
+		System.out.println(currentSelection);
+		
+	}
+	
+
+	public List<Proizvodi> listProizvodi() {
+		return remoteControler.listAllProizvodi();
+		//return null;
+	}
+	
+	@EJB
+	private ShoppingCartControllerRemote remoteControler;
+}

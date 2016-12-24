@@ -1,0 +1,43 @@
+<?xml version="1.0"?>   
+<project name="test-ant" default="build" basedir=".">
+  <property name="main.build.dir" value="build/main" />  
+  <property name="main.src.dir" value="src" />
+
+  <path id="classpath.base" >
+    <pathelement location="../../../.p2/pool/plugins/org.junit_4.12.0.v201504281640/junit.jar"/>
+    <pathelement location="../../../.p2/pool/plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+    <pathelement location="${main.build.dir}"/>
+    <pathelement location="lib/geometrija.jar"/>
+  </path>
+
+  <target name="build">
+    <mkdir dir="${main.build.dir}"/>
+    <javac srcdir="${main.src.dir}" destdir="${main.build.dir}" includeantruntime="false">
+      <classpath refid="classpath.base"/>
+    </javac>
+  	<echo message="clean done" />
+  </target>
+	
+  <target name="run" depends="build">
+  	<mkdir dir="temp"/>
+  	<unjar src="lib/geometrija.jar" dest="temp" />   
+    <jar jarfile="geometrija_test.jar" basedir="build/main"> 
+	  <manifest>
+	    <attribute name="Main-Class" value="geometrija_main.Main" />
+	  </manifest> 
+      <zipfileset dir="temp" includes="**"/>  
+	</jar>
+  	<delete dir="temp"/>
+  	<java fork="true" classname="geometrija_main.Main">
+  		<classpath refid="classpath.base"/>
+  	</java>
+  </target>  
+	
+  <target name="clean">
+    <delete>
+        <fileset dir="${basedir}" includes="**/*.class" />
+    	<fileset dir="." includes="geometrija_test.jar"/>
+    </delete>
+    <echo message="clean done" />
+  </target>
+</project>

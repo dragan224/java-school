@@ -1,0 +1,5 @@
+package org.njp.dao;
+
+public interface IDAOPoizvod {
+
+}

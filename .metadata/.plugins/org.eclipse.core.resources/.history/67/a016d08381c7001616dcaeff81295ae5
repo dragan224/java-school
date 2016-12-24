@@ -1,0 +1,23 @@
+package org.njp.services;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+import org.njp.dao.IDAOKorisnik;
+import org.njp.entities.Korisnici;
+
+@Stateless
+public class ServiceKorisnik extends ServiceAbstract<Korisnici, IDAOKorisnik> implements IServiceKorisnik{
+	
+	public ServiceKorisnik() {
+		super();
+	}
+	
+	@EJB
+	@Override
+	public void setDAO(IDAOKorisnik dao) {
+		this.dao = dao;
+	}
+
+	
+}

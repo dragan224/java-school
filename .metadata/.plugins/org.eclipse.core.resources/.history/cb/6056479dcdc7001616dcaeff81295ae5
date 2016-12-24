@@ -1,0 +1,33 @@
+package org.njp.dao;
+
+import java.util.List;
+
+import javax.ejb.Stateful;
+import javax.ejb.Stateless;
+
+import org.njp.entities.Korisnici;
+import org.njp.entities.Proizvodi;
+
+@Stateless
+public class DAOProizvod extends DAOAbstractDatabase<Proizvodi> implements IDAOProizvod {
+	public DAOProizvod() {
+		super(Proizvodi.class);
+	}
+
+	@Override
+	public boolean validateCart(List<Proizvodi> proizvodi) {
+		ArrayList<Porizvodi> baza = this.getAll()
+	}
+
+	@Override
+	public boolean sendEmail(String email) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateStore(List<Proizvodi> proizvodi) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;data_types.DrawingInterface&apos; to &apos;Shape&apos;&#x0A;- Original project: &apos;geometrija&apos;&#x0A;- Original element: &apos;data_types.DrawingInterface&apos;&#x0A;- Renamed element: &apos;data_types.Shape&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;DrawingInterface&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;data_types{DrawingInterface.java[DrawingInterface" matchStrategy="1" name="Shape" qualified="false" references="true" similarDeclarations="false" stamp="1476977144357" textual="false" version="1.0"/>
+</session>

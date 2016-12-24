@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<title>Web Shop</title>
+</head>
+<body>
+
+ <body ng-app="webshop" ng-controller="ctrl">
+    Korisnik: {{user}} <br>
+    <a href="" ng-click="kupi_red()")>Korpa</a> 
+    <a href="" ng-click="logout_red()">Logout</a>
+    <br><br>
+    <input type="text" placeholder="pretraga" ng-model="stext" ng-change="search()">
+    <br>
+    <p>Proizvodi</p>
+    <ul>
+        <li ng-repeat="p in products" ng-if="showOrHide(p.ime)">
+            {{p.ime}} {{p.kolicina}} 
+            <input type="range", min="1" max={{p.kolicina}} ng-model="val" ng-init="val='1'" ng-change="">{{val}}
+                <button ng-click="add(this)">dodaj</button>
+            </input>
+        </li>
+    </ul>
+    <br>
+    <p>Korpa:</p>
+    <ul>
+         <li ng-repeat="p in products" ng-if="showOrHideKorpa(this)" ng-controller="korpaCtrl">
+            {{p.ime}} {{korpa}} 
+            <button ng-click="delete(p.id)">ukloni iz korpe</button>
+         </li>
+    </ul>
+</body>
+
+<script>
+   var app = angular.module("webshop", []);
+   app.controller('korpaCtrl',['$scope','$http', '$window', function($scope, $http, $window) {
+	   //var item = JSON.parse($window.sessionStorage.getItem($scope.p.id));
+       //if (item) $scope.korpa = (item.kolicina);
+       setInterval(function() {
+    	   var item = JSON.parse($window.sessionStorage.getItem($scope.p.id));
+    	   if (item) $scope.korpa = (item.kolicina);
+    	   $scope.$apply();
+    	 }, 100)
+   }]);
+   app.controller('ctrl',['$scope','$http', '$window', function($scope, $http, $window) {
+	   $scope.logout_red = function() {$window.location.href = "http://localhost:8080/V05/logout.html";}
+	   $scope.kupi_red = function() {
+		   $window.location.href = "http://localhost:8080/V05/kupi.html";
+	   }
+	   
+	   $scope.user = $window.sessionStorage.getItem("email");
+	   $scope.showOrHide = function(ime) {
+           var stext = $scope.stext;
+           if (!stext) return true;
+           
+           stext = stext.replace("/^\s+|\s+$/g", '')
+           if (stext === "" || ime.indexOf(stext) !== -1) return true;
+           return false;
+	   }
+	   $scope.delete = function(id) {
+           $window.sessionStorage.removeItem(id);
+       }
+	   $scope.showOrHideKorpa = function(scope) {
+		   var p = $window.sessionStorage.getItem(scope.p.id);
+		   if (p) {
+			   scope.$parent.korpa = p.kolicina;
+			   return true;
+		   }
+		   return false;
+       }
+	 $scope.add = function(scope) {
+		 var kolicina = scope.val;
+		 //console.log(kolicina);
+		 var id = scope.p.id;
+		 var ime = scope.p.ime;
+		 
+		 var korpa = JSON.parse($window.sessionStorage.getItem(id));
+		 if (korpa) {
+			   korpa.kolicina = parseInt(korpa.kolicina) + parseInt(kolicina);
+			   if (korpa.kolicina > scope.p.kolicina) {
+				    alert("Nemamo vise od " + scope.p.kolicina + " " + scope.p.ime + "-a.");
+				    return;
+			   }
+			   $window.sessionStorage.setItem(id, JSON.stringify(korpa));
+		 } else {
+			$window.sessionStorage.setItem(id, JSON.stringify({"ime" : ime, "kolicina" : kolicina}));
+		 }
+		// $scope.$apply();
+	 }
+	 
+	 var encodedString = 'auth=' + encodeURIComponent($window.sessionStorage.getItem('auth'));
+     $http({
+    	    method:'POST',
+            url: 'http://localhost:8080/V05/rest/webshop/list',
+            data: encodedString,
+            headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+        })
+        .success(function(data, status, headers, config) {
+            $scope.products = data;
+        })
+        .error(function(data, status, headers, config){
+            console.log(data);
+        });
+    }]);
+
+</script>
+
+</body>
+</html>

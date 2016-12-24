@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<title>Checkout</title>
+</head>
+<body>
+
+ <body ng-app="checkout" ng-controller="ctrl">
+    Korisnik: {{user}} <br>
+    <a href="" ng-click="webshop_red()">Webshop</a> 
+    <a href="" ng-click="logout_red()">Logout</a>
+    <br><br>
+    <p>Korpa:</p>
+    <ul>
+         <span ng-controller="korpaCtrl" >
+         <li ng-repeat="p in products" ng-if="showOrHideKorpa(this)">
+            {{ime}} {{korpa}}
+         </li>
+         </span>
+    </ul>
+    <input type="text" placeholder="Ime" ng-model="ime"><br>
+    <input type="text" placeholder="Prezime" ng-model="prezime"><br>
+    <input type="text" placeholder="Broj Kreditne Kartice" ng-model="cc"><br>
+    <button ng-click="buy()">Kupi</button>
+</body>
+
+<script>
+   var app = angular.module("checkout", []);
+   app.controller('korpaCtrl',['$scope','$http', '$window', function($scope, $http, $window) {
+     $scope.showOrHideKorpa = function(scope) {
+    	    //console.log(scope.p.id);
+    	    var item = JSON.parse($window.sessionStorage.getItem(scope.p.id));
+    	    if (item) {
+    	        scope.ime = (item.ime);
+    	        scope.korpa = (item.kolicina);
+    	        return true;
+    	    }
+    	    return false;
+     }
+   }]);
+   app.controller('ctrl',['$scope','$http', '$window', function($scope, $http, $window) {
+	   $scope.logout_red = function() {$window.location.href = "http://localhost:8080/V05/logout.html";}
+	   var encodedString = 'auth=' + encodeURIComponent($window.sessionStorage.getItem('auth'));
+	     $http({
+	            method:'POST',
+	            url: 'http://localhost:8080/V05/rest/webshop/list',
+	            data: encodedString,
+	            headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+	        })
+	        .success(function(data, status, headers, config) {
+	            $scope.products = data;
+	        })
+	        .error(function(data, status, headers, config){
+	            console.log(data);
+	            console.log(status);
+	        });
+	 $scope.webshop_red = function() {
+           $window.location.href = "http://localhost:8080/V05/webshop.html";
+     }
+     $scope.user = $window.sessionStorage.getItem("email");
+     $scope.buy = function() {
+        var payload = "";
+        for (var i = 0; i < $scope.products.length; i++) {
+            var p = $scope.products[i];
+            var item = JSON.parse($window.sessionStorage.getItem(p.id));
+            if (item) {
+                if (item.kolicina === 0) continue;
+                if (payload !== "") payload += ",";
+                payload += p.id + "," + item.kolicina;
+            }
+        }
+        var encodedString = 'auth=' + encodeURIComponent($window.sessionStorage.getItem("auth")) + 
+                            '&email=' + encodeURIComponent($window.sessionStorage.getItem("email")) +
+                            '&payload=' + encodeURIComponent(payload);
+        $http({
+            method:'POST',
+            url: 'http://localhost:8080/V05/rest/checkout/buy',
+            data: encodedString,
+            headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+        })
+        .success(function(data, status, headers, config) {
+            alert("Uspesna kupovina!");
+            for (var i = 0; i < $scope.products.length; i++) {
+                var p = $scope.products[i];
+                var item = JSON.parse($window.sessionStorage.getItem(p.id));
+                if (item) {
+                    $window.sessionStorage.removeItem(p.id);
+                }
+            }
+        })
+        .error(function(data, status, headers, config){
+            alert("Greska prilikom kupovine");
+            console.log(data);
+            console.log(status);
+        });
+     }
+   }]);
+
+</script>
+
+</body>
+</html>

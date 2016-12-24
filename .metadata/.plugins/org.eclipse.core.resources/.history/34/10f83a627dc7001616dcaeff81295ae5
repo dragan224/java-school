@@ -1,0 +1,7 @@
+package org.njp.services;
+
+import org.njp.entities.Korisnik;
+
+public interface IServiceKorisnik extends IServiceAbstract<Korisnik> {
+
+}

@@ -1,0 +1,12 @@
+package org.njp.ejb;
+
+import java.util.ArrayList;
+
+import javax.ejb.Remote;
+
+import org.njp.entities.Korisnici;
+
+@Remote
+public interface LoginControllerRemote {
+	public ArrayList<Korisnici> getAllKorisnici();
+}

@@ -1,0 +1,38 @@
+package org.njp.controllers;
+
+import java.io.Serializable;
+
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
+@Named("sessionBean")
+@SessionScoped
+public class SessionBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5665517496032842278L;
+
+	private static SessionBean instance = null;
+	private SessionBean() {
+	}
+	
+	public static SessionBean getInstance() {
+      if(instance == null) {
+         instance = new SessionBean();
+      }
+      return instance;
+	}
+	
+	private String email;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+}

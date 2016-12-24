@@ -1,0 +1,7 @@
+package org.njp.dao;
+
+import org.njp.entities.Korisnici;
+
+public interface IDAOKorisnik extends IDAOAbstract<Korisnici> {
+
+}

@@ -1,0 +1,14 @@
+package org.njp.controllers;
+
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
+@Named("session")
+@SessionScoped
+public class SessionBean {
+
+	public SessionBean() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

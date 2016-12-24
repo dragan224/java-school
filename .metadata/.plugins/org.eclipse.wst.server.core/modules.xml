@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modules>
+  <module moduleId="org.eclipse.jst.jee.server:njp_web_servis" serverId="WildFly 10.x1478343776318"/>
+  <module moduleId="org.eclipse.jst.jee.server:Cas05EAR" serverId="WildFly 10.x1481197517502"/>
+  <module moduleId="org.eclipse.jst.jee.server:Cas05Client" serverId="WildFly 10.x1481197517502"/>
+</modules>

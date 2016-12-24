@@ -1,0 +1,11 @@
+package org.njp.ejb;
+
+import javax.ejb.Remote;
+
+import org.njp.entities.Korisnici;
+
+@Remote
+public interface LoginControllerRemote {
+	public ArrayList<Korisnici> test();
+	public boolean isValidLogin(String email, String password);
+}

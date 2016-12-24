@@ -1,0 +1,8 @@
+package org.njp.ejb;
+import javax.ejb.Remote;
+
+@WebService
+@Remote
+public interface CreditCardValidatorRemote {
+	boolean Validate(String number);
+}

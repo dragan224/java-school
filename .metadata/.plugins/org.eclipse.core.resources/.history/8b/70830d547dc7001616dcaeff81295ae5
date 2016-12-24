@@ -1,0 +1,64 @@
+package org.njp.entities;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the korisnici database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Korisnici.findAll", query="SELECT k FROM Korisnici k")
+public class Korisnik extends BasicEntity implements Serializable {
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 790502672720945145L;
+
+	private String email;
+
+	private String ime;
+
+	private String password;
+
+	private String prezime;
+
+	public Korisnik() {
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getIme() {
+		return this.ime;
+	}
+
+	public void setIme(String ime) {
+		this.ime = ime;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPrezime() {
+		return this.prezime;
+	}
+
+	public void setPrezime(String prezime) {
+		this.prezime = prezime;
+	}
+
+}

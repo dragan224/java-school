@@ -1,0 +1,20 @@
+package org.njp.ejb;
+
+import javax.ejb.LocalBean;
+import javax.ejb.Stateful;
+
+/**
+ * Session Bean implementation class ShoppingCartController
+ */
+@Stateful
+@LocalBean
+public class ShoppingCartController implements ShoppingCartControllerRemote {
+
+    /**
+     * Default constructor. 
+     */
+    public ShoppingCartController() {
+        // TODO Auto-generated constructor stub
+    }
+
+}

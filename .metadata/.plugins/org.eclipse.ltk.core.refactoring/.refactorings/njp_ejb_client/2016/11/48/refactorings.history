@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move &apos;jboss-client.jar&apos; to &apos;lib&apos;" description="Move &apos;jboss-client.jar&apos; to &apos;lib&apos;" destination="lib" element1="/njp_ejb_server/lib/jboss-client.jar" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="1" stamp="1479850371638" updateReferences="true"/>
+</session>

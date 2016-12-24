@@ -1,0 +1,24 @@
+CREATE TABLE Korisnici
+(
+KorisniciID int,
+Ime varchar(255),
+Prezime varchar(255),
+email varchar(255),
+Password varchar(255)
+);
+
+
+CREATE TABLE Proizvodi
+(
+ProizvodiID int,
+Ime varchar(255),
+Kolicina int
+);
+
+
+CREATE TABLE Kupovine
+(
+KupacID int,
+ProizvodID int,
+Kolicina int
+);

@@ -1,0 +1,32 @@
+package org.njp.ejb;
+
+import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+
+import org.njp.entities.Korisnici;
+import org.njp.services.IServiceKorisnik;
+
+/**
+ * Session Bean implementation class LoginControler
+ */
+@Stateless
+@LocalBean
+public class LoginController implements LoginControllerRemote {
+
+    /**
+     * Default constructor. 
+     */
+    public LoginController() {
+        // TODO Auto-generated constructor stub
+    }
+
+	@EJB
+	private IServiceKorisnik serviceKorisnik;
+
+	@Override
+	public ArrayList<Korisnici> getAllKorisnici() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

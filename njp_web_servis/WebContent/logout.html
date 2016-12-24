@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<title>Logout</title>
+</head>
+<body>
+
+ <body ng-app="logout" ng-controller="ctrl"></body>
+
+<script>
+   var app = angular.module("logout", []);
+   app.controller('ctrl',['$scope','$http', '$window', function($scope, $http, $window) {
+     var encodedString = 'auth=' + encodeURIComponent($window.sessionStorage.getItem('auth'));
+     $http({
+            method:'POST',
+            url: 'http://localhost:8080/V05/rest/auth_service/logout',
+            data: encodedString,
+            headers: {'Content-Type' : 'application/x-www-form-urlencoded'}
+        })
+        .success(function(data, status, headers, config) {
+            $window.sessionStorage.clear();
+            $window.location.href = "http://localhost:8080/V05/index.html";
+        })
+        .error(function(data, status, headers, config){
+            alert("neuspesan logout");
+            console.log(status);
+        });
+   }]);
+
+</script>
+
+</body>
+</html>
