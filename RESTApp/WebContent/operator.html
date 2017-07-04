@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Operator</title>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#logout').click(function(e){
+    $.ajax({
+      url: "rest/logout",
+      type:"POST",
+      data: JSON.stringify(localStorage),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        console.log(data.responseText);
+        localStorage.clear();
+        $(location).attr('href', 'http://localhost:8080/RESTApp/index.html')
+      }
+    });
+  });
+  $('#opbanform').submit(function(e){
+    e.preventDefault();
+    var data = $('#opbanform').serializeArray().reduce(function(obj, item) {
+      obj[item.name] = item.value;
+      return obj;
+    }, {});
+    data['token'] = localStorage['token'];
+    $.ajax({
+      url: "rest/ban",
+      type:"POST",
+      data: JSON.stringify(data),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        if (data.responseText == "ERROR") {
+          alert("Neuspesno banovanje");
+        } else {
+          alert("Uspesno banovanje");
+        }
+      }
+    });
+  });
+  $('#opremoveform').submit(function(e){
+    e.preventDefault();
+    var data = $('#opremoveform').serializeArray().reduce(function(obj, item) {
+      obj[item.name] = item.value;
+      return obj;
+    }, {});
+    data['token'] = localStorage['token'];
+    $.ajax({
+      url: "rest/removeairplane",
+      type:"POST",
+      data: JSON.stringify(data),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        if (data.responseText == "ERROR") {
+          alert("Neuspesno brisanje");
+        } else {
+          alert("Uspesno brisanje");
+        }
+      }
+    });
+  });
+  $('#opaddform').submit(function(e){
+    e.preventDefault();
+    var data = $('#opaddform').serializeArray().reduce(function(obj, item) {
+      obj[item.name] = item.value;
+      return obj;
+    }, {});
+    data['token'] = localStorage['token'];
+    if (isNaN(data['row']) || isNaN(data['col']) || isNaN(data['space']) || isNaN(data['flight'])) {
+      alert("Los unos!");
+      return;
+    }
+    $.ajax({
+      url: "rest/addairplane",
+      type:"POST",
+      data: JSON.stringify(data),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        if (data.responseText == "ERROR") {
+          alert("Neuspesno dodavanje");
+        } else {
+          alert("Uspesno dodatavnje");
+        }
+      }
+    });
+  });
+  $.ajax({
+    url: "rest/showusers",
+    type:"POST",
+    data: JSON.stringify(localStorage),
+    contentType:"application/json",
+    dataType:"json",
+    complete: function(data) {
+      if (data.responseText == "ERROR") {
+          alert("ERROR SHOWING USERS - LOGIN?.");
+      } else {
+        var elem = $('#ophistory');
+        var users = data.responseText.split("\n");
+        for (var i = 0; i < users.length; i++) {
+          var payload = {"user": users[i], "token": localStorage['token']};
+          $("#opusers").append(users[i] + "<br>");
+          $.ajax({
+            url: "rest/showhistory",
+            type:"POST",
+            data: JSON.stringify(payload),
+            contentType:"application/json",
+            dataType:"json",
+            complete: function(data) {
+              if (data.responseText == "OK") return;
+              var lines = data.responseText.split("\n");
+              for (var i = 0; i < lines.length; i++) {
+                var line = lines[i].split(" ");
+                elem.append("Korisnik " + line[0] + " u avionu " + line[1] + " red " + line[2] + " kolona " + line[3] + " ");
+                if (line[4] == "0") {
+                  elem.append("kupio kartu.")
+                } else if (line[4] == "1") {
+                  elem.append("rezervisao kartu.")
+                } else if (line[4] == "-1") {
+                  elem.append("odustao od karte.")
+                }
+                elem.append("<br>")
+              }
+            }
+          });
+        }
+      }
+    }
+  });
+});
+</script>
+</head>
+<body>
+  <button id="logout">logout</button>
+  <br>
+  <form id="opbanform" action="" method="POST">
+    <h1>Ban User</h1>
+    Username: <input type="text" name="user"/> <br>
+    <button value="submit">ban</button>
+  </form>
+  <form id="opremoveform" action="" method="POST">
+    <h1>Remove Airplane</h1>
+    Name: <input type="text" name="name"/> <br>
+    <button value="submit">remove</button>
+  </form>
+  <form id="opaddform" action="" method="POST">
+    <h1>Add Airplane</h1>
+    Name: <input type="text" name="name"/> <br>
+    Row: <input type="text" name="row"/> <br>
+    Col: <input type="text" name="col"/> <br>
+    Space: <input type="text" name="space"/> <br>
+    Flight: <input type="text" name="flight"/> <br>
+    <button value="submit">add</button>
+  </form>
+  <br>
+  <div id="ophistory">
+    <h1>History</h1>
+  </div>
+  <div id="opusers">
+    <h1>Users</h1>
+  </div>
+</body>
+</html>

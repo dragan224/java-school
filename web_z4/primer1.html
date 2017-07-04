@@ -1,0 +1,52 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>
+      Web programiranje - HTTP - Primer
+    </title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+  
+	<h1>Registracija:</h1>
+		
+	<form action="http://localhost:8113" method="GET" name="forma">
+	
+		<table cellspacing = 0 cellpadding=3 border=0>
+			<tr>
+				<td align=right>Ime:</td>
+				<td><input type="text" name="poljeForme1"></td>
+				<td><input type="password" name="poljeForme2"></td>
+				<td hidden><input type="text" name="hidden1"></td>
+			</tr>
+			<tr>
+				<td align=right>&nbsp;</td>
+				<td><input type="submit" value=" register "></td>
+			</tr>
+		</table>
+	
+	</form>
+	
+	
+	<h1>Pretraga:</h1>
+	
+	<form action="http://localhost:8113" method="GET" name="forma">
+	
+		<table cellspacing = 0 cellpadding=3 border=0>
+			<tr>
+				<td align=right>Ime:</td>
+				<td><input type="text" name="poljeForme1"></td>
+				<td hidden><input type="text" name="hidden2"></td>
+			</tr>
+			<tr>
+				<td align=right>&nbsp;</td>
+				<td><input type="submit" value=" search "></td>
+			</tr>
+		</table>
+	
+	</form>
+  
+  </body>
+</html>

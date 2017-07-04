@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html>
+<head>
+<style>
+
+table {
+ float:left;
+}
+table, td, tr {
+  border: 1px solid gray;
+    border-collapse: collapse;
+}
+.header {
+  text-align: center;
+}
+.input {
+  background: #fafafa
+}
+.right {
+  margin-left: 350px;
+}
+
+.reg {
+   text-align: center;
+}
+
+</style>
+</head>
+<body>
+<h1>Produženje registracije</h1>
+<p>Na ovoj stranici možete obaviti produženje registracije Vašeg automobila. Popunite sledeći formular.</p>
+<br><br>
+<table style="width=600px">
+  <tr>
+    <td colspan="2" class="header">Produženje Registracije</td>
+  </tr>
+  <tr></tr>
+  <tr>
+    <td class="td">Ime:</td>
+    <td><input type="text" class="input" id="1"></td>
+  </tr>
+  <tr>
+    <td>Prezime:</td>
+    <td><input type="text" class="input" id="2"></td>
+  </tr>
+  <tr>
+    <td>JMBG:</td>
+    <td><input type="text" class="input" id="3"></td>
+  </tr>
+  <tr>
+    <td>Marka Vozila:</td>
+    <td>
+      <select onchange="logo()" id="vozila">
+            <option value="mercedes">Mercedes</option>
+            <option value="peugot">Peugot</option>
+            <option value="renault">Renault</option>
+    </select>
+    </td>
+  </tr>
+  <tr>
+    <td>Tip Vozila:</td>
+    <td><input type="text" class="input" id="4"></td>
+  </tr>
+  <tr>
+    <td>Registarska Oznaka:</td>
+    <td><input type="text" class="input" id="5"></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><button type="button" onclick="submit()">Pošalji</button></td>
+  </tr>
+</table>
+
+<div class="right"> 
+
+<img src="mercedes.png" id="logo" height="100px" width="100px">
+<br><br><br><br>
+<table id="tabela">
+  <tr>
+    <td colspan="2" class="header">Registrovani korisnici</td>
+  </tr>
+  <tr></tr>
+  <tr>
+    <td class="reg"><b>Ime</b></td>
+    <td class="reg"><b>JMBG</b></td>
+  </tr>
+  
+</table>
+
+</body>
+
+<script>
+function logo() {
+  var e = document.getElementById("vozila");
+    var x = document.getElementById("logo");
+    var str = e.options[e.selectedIndex].value + ".png";
+    x.setAttribute("src", str);
+}
+function submit() {
+  
+  var ime = document.getElementById("1").value;
+    var prezime = document.getElementById("2").value;
+    var jmbg = document.getElementById("3").value;
+    var tip = document.getElementById("4").value;
+    var reg = document.getElementById("5").value;
+    if (ime && prezime && jmbg && tip && reg && jmbg.length === 13 && !isNaN(jmbg)) {
+    alert("Uspesna registracija!");
+        var table = document.getElementById("tabela");
+        var row = table.insertRow(table.rows.length);
+        var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+        cell1.innerHTML = ime;
+        cell1.setAttribute("class", "reg");
+      cell2.innerHTML = jmbg;
+        cell2.setAttribute("class", "reg");
+  } else {
+      alert("Unesite sva polja - JMBG treba imati 13 cifara");
+    }
+}
+
+</script>
+</html>
+
+

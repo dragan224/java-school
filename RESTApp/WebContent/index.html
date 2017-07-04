@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login/Register</title>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#regform').submit(function(e){
+    e.preventDefault();
+    var data = $('#regform').serializeArray().reduce(function(obj, item) {
+      obj[item.name] = item.value;
+      return obj;
+    }, {});
+    $.ajax({
+      url: "rest/register",
+      type:"POST",
+      data: JSON.stringify(data),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        console.log(data.responseText);
+        if (data.responseText == "ERROR") {
+          alert("Neuspesna registracija");
+        } else {
+          alert("Uspesna registracija");
+        }
+      }
+    });
+  });
+  $('#logadmin').submit(function(e){
+    e.preventDefault();
+    var data = $('#logadmin').serializeArray().reduce(function(obj, item) {
+      obj[item.name] = item.value;
+      return obj;
+    }, {});
+    localStorage['user'] = data.user;
+    $.ajax({
+      url: "rest/login",
+      type:"POST",
+      data: JSON.stringify(data),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        if (data.responseText == "ERROR") {
+          alert("Neuspesno logovanje");
+        } else {
+          localStorage['token'] = data.responseText;
+          $(location).attr('href', 'http://localhost:8080/RESTApp/admin.html')
+        }
+      }
+    });
+  });
+  $('#logop').submit(function(e){
+    e.preventDefault();
+    var data = $('#logop').serializeArray().reduce(function(obj, item) {
+      obj[item.name] = item.value;
+      return obj;
+    }, {});
+    localStorage['user'] = data.user;
+    $.ajax({
+      url: "rest/login",
+      type:"POST",
+      data: JSON.stringify(data),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        if (data.responseText == "ERROR") {
+          alert("Neuspesno logovanje");
+        } else {
+          localStorage['token'] = data.responseText;
+          $(location).attr('href', 'http://localhost:8080/RESTApp/operator.html')
+        }
+      }
+    });
+  });
+  $('#loguser').submit(function(e){
+    e.preventDefault();
+    var data = $('#loguser').serializeArray().reduce(function(obj, item) {
+      obj[item.name] = item.value;
+      return obj;
+    }, {});
+    localStorage['user'] = data.user;
+    $.ajax({
+      url: "rest/login",
+      type:"POST",
+      data: JSON.stringify(data),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        if (data.responseText == "ERROR") {
+          alert("Neuspesno logovanje");
+        } else {
+          localStorage['token'] = data.responseText;
+          $(location).attr('href', 'http://localhost:8080/RESTApp/user.html')
+        }
+      }
+    });
+  });
+});
+</script>
+</head>
+<body>
+	<form id="regform" action="" method="POST">
+    <h1>Register</h1>
+    Username: <input type="text" name="user"/> <br>
+    Password: <input type="password" name="pass"/> <br>
+    <button value="submit">submit</button>
+  </form>
+  <form id="loguser" action="" method="POST">
+    <h1>Login User</h1>
+    Username: <input type="text" name="user"/> <br>
+    Password: <input type="password" name="pass"/> <br>
+    <button value="submit">submit</button>
+  </form>
+  <form id="logop" action="" method="POST">
+    <h1>Login Operator</h1>
+    Username: <input type="text" name="user"/> <br>
+    Password: <input type="password" name="pass"/> <br>
+    <button value="submit">submit</button>
+  </form>
+  <form id="logadmin" action="" method="POST">
+    <h1>Login Admin</h1>
+    Username: <input type="text" name="user"/> <br>
+    Password: <input type="password" name="pass"/> <br>
+    <button value="submit">submit</button>
+  </form>
+</body>
+</html>

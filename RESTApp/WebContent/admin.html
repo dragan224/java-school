@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin</title>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#logout').click(function(e){
+    $.ajax({
+      url: "rest/logout",
+      type:"POST",
+      data: JSON.stringify(localStorage),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        console.log(data.responseText);
+        localStorage.clear();
+        $(location).attr('href', 'http://localhost:8080/RESTApp/index.html')
+      }
+    });
+  });
+  $('#addopform').submit(function(e){
+    e.preventDefault();
+    var data = $('#addopform').serializeArray().reduce(function(obj, item) {
+      obj[item.name] = item.value;
+      return obj;
+    }, {});
+    data['token'] = localStorage['token']
+    $.ajax({
+      url: "rest/addoperator",
+      type:"POST",
+      data: JSON.stringify(data),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        if (data.responseText == "ERROR") {
+          alert("Neuspesno dodat op.");
+        } else {
+          alert("Uspesno dodat op.");
+        }
+      }
+    });
+  });
+});
+</script>
+</head>
+<body>
+  <button id="logout">logout</button>
+  <br>
+  <form id="addopform" action="" method="POST">
+    <h1>Add Operator</h1>
+    Username: <input type="text" name="user"/> <br>
+    Password: <input type="password" name="pass"/> <br>
+    <button value="submit">submit</button>
+  </form>
+</body>
+</html>

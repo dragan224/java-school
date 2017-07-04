@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>User</title>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#logout').click(function(e){
+    $.ajax({
+      url: "rest/logout",
+      type:"POST",
+      data: JSON.stringify(localStorage),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        console.log(data.responseText);
+        localStorage.clear();
+        $(location).attr('href', 'http://localhost:8080/RESTApp/index.html')
+      }
+    });
+  });
+  history();
+  $.ajax({
+    url: "rest/showairports",
+    type:"POST",
+    data: JSON.stringify(localStorage),
+    contentType:"application/json",
+    dataType:"json",
+    complete: function(data) {
+      var lines = data.responseText.split("\n");
+      for (var i = 0; i < lines.length; i++) {
+        $("#source").append($("<option/>").val(lines[i]).text(lines[i]));
+        $("#dest").append($("<option/>").val(lines[i]).text(lines[i]));
+      }
+    }
+  });
+  $('#searchform').submit(function(e){
+    e.preventDefault();
+    var data = $('#searchform').serializeArray().reduce(function(obj, item) {
+      obj[item.name] = item.value;
+      return obj;
+    }, {});
+    data['token'] = localStorage['token'];
+    $.ajax({
+      url: "rest/search",
+      type:"POST",
+      data: JSON.stringify(data),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        if (data.responseText == "ERROR") {
+          alert("Neuspesna pretraga :(");
+        } else {
+          if (data.responseText == "OK") {
+            alert ("Ne postoje letovi za unete podatke!");
+            return;
+          }
+          var html = "";
+          var lines = data.responseText.split("\n");
+          for (var i = 0; i < lines.length; i++) {
+            html += "Let: #" + lines[i] + "<br>";
+            var _payload = {"flight": lines[i], "token": localStorage['token']};
+            $.ajax({
+              url: "rest/showflight",
+              type:"POST",
+              data: JSON.stringify(_payload),
+              contentType:"application/json",
+              dataType:"json",
+              complete: function(data) {
+                var airplanes = data.responseText.split("\n");
+                for (var j = 0; j < airplanes.length; j++) {
+                  var av = airplanes[j].split(" ")[0];
+                  html += "Avion: " + av + '<button onclick="airplane('+"'"+av+"'"+')">' + 'show</button>';
+                  html += '<div id="'+av+'"></div>';
+                }
+                html += "<br>";
+                $("#searchresults").html(html);
+              },
+              async: false
+            });
+          }
+        }
+      }
+    });
+  });
+});
+function history() {
+  var payload = {"user": localStorage['user'], "token": localStorage['token']};
+  var elem = $("#userhistory");
+  $("#thisidshouldberemovedhistory").remove();
+  $.ajax({
+    url: "rest/showhistory",
+    type:"POST",
+    data: JSON.stringify(payload),
+    contentType:"application/json",
+    dataType:"json",
+    complete: function(data) {
+      var strhtml = "";
+      if (data.responseText == "OK") return;
+      var lines = data.responseText.split("\n");
+      var skip = {};
+      for (var i = 0; i < lines.length; i++) {
+        var line_i = lines[i].split(" ");
+        if (line_i[4] == "1") { // rezervacija!
+          for (var j = i + 1; j < lines.length; j++) {
+            var line_j = lines[j].split(" ");
+            if (line_i[0] == line_j[0] && line_i[1] == line_j[1] && line_i[2] == line_j[2]  && line_i[3] == line_j[3]) {
+              skip[i] = "true";
+              break;
+            } 
+          }
+        }
+      }
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i].split(" ");
+        strhtml += "Korisnik " + line[0] + " u avionu " + line[1] + " red " + line[2] + " kolona " + line[3] + " ";
+        if (line[4] == "0") {
+          strhtml += "kupio kartu.";
+        } else if (line[4] == "1") {
+          strhtml += "rezervisao kartu.";
+          if (!(i in skip)) {
+            strhtml += "<button onclick=\"cancel("+ '\''+line[1]+'\',' + '\''+line[2]+'\',' + '\''+line[3]+'\'' +")\">cancel</button>";
+            strhtml += "<button onclick=\"buy("+ '\''+line[1]+'\',' + '\''+line[2]+'\',' + '\''+line[3]+'\'' +")\">buy</button>";
+          }
+        } else if (line[4] == "-1") {
+          strhtml += "odustao od karte.";
+        }
+        strhtml += "<br>";
+      }
+      elem.html(strhtml);
+    }
+  });
+}
+function cancel(name, row, col) {
+  var data = {"name": name, "row": row, "col": col, "token": localStorage['token']};
+  $.ajax({
+    url: "rest/cancel",
+    type:"POST",
+    data: JSON.stringify(data),
+    contentType:"application/json",
+    dataType:"json",
+    complete: function(data) {
+      if (data.responseText == "ERROR") {
+        alert ("Error?");
+      } else {
+        alert ("Otkazali ste kartu!");
+      }
+      history();
+      if (name in is_shown) showseats(name);
+    }
+  });
+}
+function buy(name, row, col) {
+  var data = {"name": name, "row": row, "col": col, "token": localStorage['token']};
+  $.ajax({
+    url: "rest/buy",
+    type:"POST",
+    data: JSON.stringify(data),
+    contentType:"application/json",
+    dataType:"json",
+    complete: function(data) {
+      if (data.responseText == "ERROR") {
+        alert ("Error?");
+      } else {
+        alert ("Kupili ste kartu!");
+      }
+      history();
+      if (name in is_shown) showseats(name);
+    }
+  });
+}
+function reserve(name, row, col) {
+  if (confirm('Da li hocete da rezervisete sediste ' + row + " " + col + "?")) {
+    var data = {"name": name, "row": row, "col": col, "token": localStorage['token']};
+    $.ajax({
+      url: "rest/reserve",
+      type:"POST",
+      data: JSON.stringify(data),
+      contentType:"application/json",
+      dataType:"json",
+      complete: function(data) {
+        if (data.responseText == "ERROR") {
+          alert ("Neuspesna rezervacija :(");
+        } else {
+          alert ("Cestitamo, uspesno ste rezervisali kartu!");
+        }
+        history();
+        if (name in is_shown) showseats(name);
+      }
+    });
+  } else {
+
+  }
+}
+var is_shown = {}
+function showseats(name) {
+  is_shown[name] = true;
+  var data = {"name":name, "token": localStorage['token']};
+  $.ajax({
+    url: "rest/showseats",
+    type:"POST",
+    data: JSON.stringify(data),
+    contentType:"application/json",
+    dataType:"json",
+    complete: function(data) {
+      var lines = data.responseText.split("\n");
+      var html = "";
+      for (var i = 0; i < lines.length; i++) {
+          var spaces = 0;
+          var line = lines[i].split(" ");
+          var nbsp = "&nbsp&nbsp&nbsp&nbsp";
+          if (i == 0) {
+            html += "&nbsp&nbsp&nbsp&nbsp&nbsp";
+             for (var j = 0; j < line.length; j++) {
+                if (line[j] == "0" || line[j] == "1") {
+                  html += ""+(j-spaces) + nbsp;
+                } else {
+                  spaces++;
+                  html += nbsp + "&nbsp&nbsp";
+                }
+             }
+          }
+          html += "<br>";
+          html += i + "&nbsp";
+          spaces = 0;
+          for (var j = 0; j < line.length; j++) {
+            var img = "";
+            if (line[j] == "0") {
+              img = '<img src="green.png" onclick="reserve(' + '\''+name+'\',' + '\''+i+'\',' + '\''+(j-spaces)+'\'' + ')" height="20" width="20">';
+            } else if (line[j] == "1") {
+              img = '<img src="red.png" height="20" width="20">';
+            } else if (line[j] == "2") {
+              spaces++;
+              img = '<img src="white.png" height="20" width="20">';
+            }
+            html += img + "&nbsp";
+          }
+      }
+      $("#"+name).html(html);
+    }
+  });
+}
+function airplane(name) { 
+  showseats(name);
+}
+</script>
+</head>
+<body>
+  <button id="logout">logout</button>
+  <form id="searchform" action="" method="POST">
+    <h1>Search</h1>
+    <select name="source" id="source"></select>
+    <select name="dest" id="dest"></select>
+    <button value="submit">search</button>
+  </form>
+  <br>
+  <div id="searchresults"></div>
+  <br>
+  <h1>History</h1>
+  <div id="userhistory"></div>
+</body>
+</html>

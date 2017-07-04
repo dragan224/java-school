@@ -1,0 +1,48 @@
+user
+username (pk)
+password
+privilege (0, 1, 2) (0 - admin, 1 - operator, 2 - user)
+banned (0, 1)
+
+airplane
+name (pk)
+rowCount
+columnCount
+spacesCount
+flightNumber
+
+flight
+number (pk)
+source
+destination
+
+history
+<user> <airplane> <rowNumber> <colNumber> <0|1|-1>
+
+0 - ticket bought (can't cancel)
+1 - reserved ticket (can cancel)
+-1 - canceled ticket 
+
+<everyone>
+login user pass
+register user pass
+logout token
+
+<admin>
+addoperator user pass token
+
+<operator>
+addairplane name rowCount columntCount spaceCount flightNumber token
+removeairplane name token
+ban user token
+showusers token
+
+<user>
+search source destination token
+reserve airplane rowNumber colNumber token
+cancel airplane rowNumber colNumber token
+buy airplane rowNumber colNumber token
+showflight flight token
+showhistory user token 
+showseats airplane token  (0 - free, 1 - taken, 2 - space)
+showairports token
